@@ -11,11 +11,17 @@ package com.hackathon.sentiment.api.service.impl;/*
  */
 
 import com.hackathon.sentiment.api.dto.request.SentimientReq;
+import com.hackathon.sentiment.api.dto.response.SentimentResponse;
 import com.hackathon.sentiment.api.service.ConsultaService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ConsultaServiceImpl implements ConsultaService {
+
     @Override
-    public Object evalAnlisisSentimiento(SentimientReq sentimientReq) {
-        return null;
+    public SentimentResponse evalAnlisisSentimiento(SentimientReq sentimientReq) {
+        // TODO: aquí luego integran el modelo / Data Science
+        return new SentimentResponse("Positivo", 0.87);
     }
 }
+
