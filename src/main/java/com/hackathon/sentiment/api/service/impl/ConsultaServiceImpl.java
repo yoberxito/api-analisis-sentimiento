@@ -1,4 +1,4 @@
-package com.hackathon.sentiment.api.service;/*
+package com.hackathon.sentiment.api.service.impl;/*
  * Copyright (c) 2025 yober cieza coronel. Todos los derechos reservados.
  *
  * Este archivo es parte de api-analisis-sentimiento.
@@ -11,7 +11,11 @@ package com.hackathon.sentiment.api.service;/*
  */
 
 import com.hackathon.sentiment.api.dto.request.SentimientReq;
+import com.hackathon.sentiment.api.service.ConsultaService;
 
-public interface ConsultaService {
-    Object evalAnlisisSentimiento(SentimientReq sentimientReq);
+public class ConsultaServiceImpl implements ConsultaService {
+    @Override
+    public Object evalAnlisisSentimiento(SentimientReq sentimientReq) {
+        return null;
+    }
 }
