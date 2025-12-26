@@ -11,7 +11,8 @@ package com.hackathon.sentiment.api.service;/*
  */
 
 import com.hackathon.sentiment.api.dto.request.SentimientReq;
+import com.hackathon.sentiment.api.dto.response.SentimentResponse;
 
 public interface ConsultaService {
-    Object evalAnlisisSentimiento(SentimientReq sentimientReq);
+    SentimentResponse evalAnlisisSentimiento(SentimientReq sentimientReq);
 }

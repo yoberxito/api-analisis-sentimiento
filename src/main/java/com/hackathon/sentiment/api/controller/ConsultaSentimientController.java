@@ -11,33 +11,32 @@ package com.hackathon.sentiment.api.controller;/*
  */
 
 import com.hackathon.sentiment.api.dto.request.SentimientReq;
+import com.hackathon.sentiment.api.dto.response.ErrorResponse;
+import com.hackathon.sentiment.api.dto.response.SentimentResponse;
 import com.hackathon.sentiment.api.service.ConsultaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api-analisis-sentimient")
 @Slf4j
 @RequiredArgsConstructor
 public class ConsultaSentimientController {
     private final ConsultaService consultaService;
 
-    @PostMapping("sentiment")
-    public ResponseEntity<?> analisisSentimiento(
-            @RequestBody SentimientReq sentimientReq
-            ){
-        Object responseSentiment=consultaService.evalAnlisisSentimiento(sentimientReq);
-        return ResponseEntity.ok().body(responseSentiment);
+    @PostMapping("/sentiment")
+    public ResponseEntity<?> analisisSentimiento(@RequestBody SentimientReq sentimientReq) {
 
+        if (sentimientReq == null || sentimientReq.text() == null || sentimientReq.text().trim().length() < 5) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new ErrorResponse("El campo 'text' es obligatorio y debe tener al menos 5 caracteres"));
+        }
 
-
-
-
+        SentimentResponse response = consultaService.evalAnlisisSentimiento(sentimientReq);
+        return ResponseEntity.ok(response);
     }
-
 }

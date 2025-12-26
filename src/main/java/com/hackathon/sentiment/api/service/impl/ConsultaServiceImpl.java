@@ -12,12 +12,12 @@ package com.hackathon.sentiment.api.service.impl;/*
 
 import com.hackathon.sentiment.api.client.DsClient;
 import com.hackathon.sentiment.api.dto.request.SentimientReq;
+import com.hackathon.sentiment.api.dto.response.SentimentResponse;
 import com.hackathon.sentiment.api.service.ConsultaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -25,20 +25,11 @@ import java.util.Map;
 public class ConsultaServiceImpl implements ConsultaService {
     private final DsClient dsClient;
 
+
     @Override
-    public Object evalAnlisisSentimiento(SentimientReq sentimientReq) {
-        try {
-
-
-
-        Map<String, Object> result = dsClient.predict(sentimientReq.text());
-
-        return new Object(
-                result.get("prevision").toString(),
-                Double.valueOf(result.get("probabilidad").toString())
-        );
-        }catch (Exception e){
-            throw new  RuntimeException(e);
-        }
+    public SentimentResponse evalAnlisisSentimiento(SentimientReq sentimientReq) {
+        // TODO: aquí luego integran el modelo / Data Science
+        return new SentimentResponse("Positivo", 0.87);
     }
 }
+
