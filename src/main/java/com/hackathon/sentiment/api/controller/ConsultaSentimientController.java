@@ -11,6 +11,7 @@ package com.hackathon.sentiment.api.controller;/*
  */
 
 import com.hackathon.sentiment.api.dto.request.SentimientReq;
+import com.hackathon.sentiment.api.service.ConsultaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +25,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 public class ConsultaSentimientController {
+    private final ConsultaService consultaService;
 
     @PostMapping("sentiment")
     public ResponseEntity<?> analisisSentimiento(
             @RequestBody SentimientReq sentimientReq
             ){
+        Object responseSentiment=consultaService.evalAnlisisSentimiento(sentimientReq);
+        return ResponseEntity.ok().body(responseSentiment);
+
 
 
 
