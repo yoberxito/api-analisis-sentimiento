@@ -10,5 +10,20 @@ package com.hackathon.sentiment.api.exception;/*
  * Cualquier uso no autorizado puede ser sancionado según la ley vigente.
  */
 
+import com.hackathon.sentiment.api.dto.response.ErrorResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleAnyException(Exception ex) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Error interno al procesar el texto"));
+    }
 }
+
