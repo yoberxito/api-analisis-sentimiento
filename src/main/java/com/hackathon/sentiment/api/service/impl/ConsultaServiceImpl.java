@@ -18,9 +18,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 @Service
 @Slf4j
@@ -34,20 +31,22 @@ public class ConsultaServiceImpl implements ConsultaService {
 
         try {
             var result = dsClient.predict(sentimientReq.text());
-            log.info("result:{}",result);
-
-            Object previsionObj1 = result.get("texto");
-            log.info("previsionObj1:{}",previsionObj1);
 
             if (result != null) {
 
                 Object previsionObj = result.get("prevision");
+                if (previsionObj == null) previsionObj = result.get("prediction");
+                if (previsionObj == null) previsionObj = result.get("sentiment");
 
+                Object probObj = result.get("probabilidad");
+                if (probObj == null) probObj = result.get("probability");
+                if (probObj == null) probObj = result.get("score");
+                if (probObj == null) probObj = result.get("confianza");
+                if (probObj == null) probObj = result.get("confidence");
 
-                Object probObj = result.get("confianza");
 
                 if (previsionObj != null && probObj != null) {
-                    log.info("previsionObj1:{}", previsionObj1);
+                    String prevision = previsionObj.toString();
 
                     Double probabilidad;
                     if (probObj instanceof Number) {
@@ -56,22 +55,19 @@ public class ConsultaServiceImpl implements ConsultaService {
                         probabilidad = Double.valueOf(probObj.toString());
                     }
 
-                    return new SentimentResponse(previsionObj.toString(), probabilidad);
-                }else {
-                    throw new RuntimeException("Algun response es null");
+                    return new SentimentResponse(prevision, probabilidad);
                 }
-
-            }else {
-                throw new RuntimeException("la consulta resultado null");
-
             }
 
+            // Si DS respondió pero no trajo campos esperados, cae a mock
+            log.warn("Respuesta DS sin campos esperados. Usando MOCK. Respuesta: {}", result);
 
         } catch (Exception ex) {
             // DS no disponible / error de red / etc. -> mock
             log.warn("DataScience no disponible. Usando MOCK. Detalle: {}", ex.getMessage());
-            throw new RuntimeException("Error en la consulta");
-
         }
+
+        // MOCK por defecto mientras DS no esté listo
+        return new SentimentResponse("Positivo", 0.87);
     }
 }
