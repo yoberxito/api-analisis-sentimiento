@@ -73,7 +73,7 @@ public class ConsultaServiceImpl implements ConsultaService {
             throw new IllegalStateException("Error de datos enviados al servicio  ");
             // DS no disponible / error de red / etc. -> mock
         }catch (Exception ex) {
-            throw new Exception("Servicio de análisis de sentimiento no disponible");
+            throw new Exception("Servicio DS de análisis de sentimiento no disponible");
         }
 
     }
