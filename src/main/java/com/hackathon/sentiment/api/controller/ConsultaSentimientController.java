@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Closeable;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class ConsultaSentimientController {
 
     @PostMapping("/sentiment")
     public ResponseEntity<?> analisisSentimiento(@RequestBody SentimientReq sentimientReq) {
+        log.info("Start-api-analisis");
 
         if (sentimientReq == null || sentimientReq.text() == null || sentimientReq.text().trim().length() < 5) {
             return ResponseEntity

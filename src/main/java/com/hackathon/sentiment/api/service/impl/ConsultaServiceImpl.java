@@ -30,6 +30,8 @@ public class ConsultaServiceImpl implements ConsultaService {
     public SentimentResponse evalAnlisisSentimiento(SentimientReq sentimientReq) {
 
         try {
+            log.info("Start-consumo-service-DS");
+
             var result = dsClient.predict(sentimientReq.text());
 
             if (result != null) {
@@ -56,18 +58,23 @@ public class ConsultaServiceImpl implements ConsultaService {
                     }
 
                     return new SentimentResponse(prevision, probabilidad);
+                }else {
+                    throw new IllegalStateException("Respuesta vacía del servicio de DataScience");
+
                 }
+
+            }else {
+                throw new IllegalStateException("Respuesta vacía del servicio de DataScience");
+
             }
 
-            // Si DS respondió pero no trajo campos esperados, cae a mock
-            log.warn("Respuesta DS sin campos esperados. Usando MOCK. Respuesta: {}", result);
 
-        } catch (Exception ex) {
+        } catch (IllegalStateException  ex) {
+            throw new IllegalStateException("Error de datos enviados al servicio  ");
             // DS no disponible / error de red / etc. -> mock
-            log.warn("DataScience no disponible. Usando MOCK. Detalle: {}", ex.getMessage());
+        }catch (Exception ex) {
+            throw new RuntimeException("Servicio de análisis de sentimiento no disponible", ex);
         }
 
-        // MOCK por defecto mientras DS no esté listo
-        return new SentimentResponse("Positivo", 0.87);
     }
 }
