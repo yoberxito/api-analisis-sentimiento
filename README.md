@@ -23,8 +23,13 @@ El backend consume el servicio DS para obtener la predicción.
   - `DS_BASE_URL` (variable/propiedad de configuración del servicio)
 
 Ejemplos (ajusta según tu entorno):
-- Local: `http://localhost:8000`
-- Path esperado en DS: `POST /sentiment`
+- Qa: `curl --request POST \
+  --url https://api-analis-sentieminto.yccweb.uk/api-analisis/sentiment \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/11.3.0' \
+  --data '{
+  "text": "pésimo servicio"
+  }	'`
 
 > Nota: No se deben subir credenciales, tokens o keys al repositorio. Solo variables/propiedades de configuración.
 
