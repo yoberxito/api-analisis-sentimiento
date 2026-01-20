@@ -32,7 +32,7 @@ public class ConsultaSentimientController {
     private final ConsultaService consultaService;
 
     @PostMapping("/sentiment")
-    public ResponseEntity<?> analisisSentimiento(@RequestBody SentimientReq sentimientReq) {
+    public ResponseEntity<?> analisisSentimiento(@RequestBody SentimientReq sentimientReq) throws Exception {
         log.info("Start-api-analisis");
 
         if (sentimientReq == null || sentimientReq.text() == null || sentimientReq.text().trim().length() < 5) {
