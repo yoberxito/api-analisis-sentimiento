@@ -27,7 +27,7 @@ public class ConsultaServiceImpl implements ConsultaService {
 
 
     @Override
-    public SentimentResponse evalAnlisisSentimiento(SentimientReq sentimientReq) {
+    public SentimentResponse evalAnlisisSentimiento(SentimientReq sentimientReq) throws Exception {
 
         try {
             log.info("Start-consumo-service-DS");
@@ -73,7 +73,7 @@ public class ConsultaServiceImpl implements ConsultaService {
             throw new IllegalStateException("Error de datos enviados al servicio  ");
             // DS no disponible / error de red / etc. -> mock
         }catch (Exception ex) {
-            throw new RuntimeException("Servicio de análisis de sentimiento no disponible", ex);
+            throw new Exception("Servicio de análisis de sentimiento no disponible");
         }
 
     }

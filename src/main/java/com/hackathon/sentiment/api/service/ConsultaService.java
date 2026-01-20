@@ -14,5 +14,5 @@ import com.hackathon.sentiment.api.dto.request.SentimientReq;
 import com.hackathon.sentiment.api.dto.response.SentimentResponse;
 
 public interface ConsultaService {
-    SentimentResponse evalAnlisisSentimiento(SentimientReq sentimientReq);
+    SentimentResponse evalAnlisisSentimiento(SentimientReq sentimientReq) throws Exception;
 }
